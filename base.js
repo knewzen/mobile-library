@@ -1,7 +1,7 @@
 /**
  * Created by hanminghui on 16/9/12.
  */
-let  M = {
+let Mob = {
 
     /**
      * ua客户端判断
@@ -13,27 +13,27 @@ let  M = {
      * 是否微信环境
      */
     isWeixin(){
-        let ua =M.ua();
+        let ua =Mob.ua();
         return /micromessenger/.test(ua);
     },
     /**
      * 移动端判断
      */
     isMobile(){
-        M.ua().match(/iPhone|iPad|iPod|Android|IEMobile/i);
+        Mob.ua().match(/iPhone|iPad|iPod|Android|IEMobile/i);
     },
     isIOS(){
-        let a = M.ua();
+        let a = Mob.ua();
         return (a.indexOf("iphone") != -1 || a.indexOf("ipad") != -1 || a.indexOf("ipod") != -1) ? 1 : 0;
     },
     isAndroid(){
-        return M.ua().indexOf("android") != -1 ? 1 : 0;
+        return Mob.ua().indexOf("android") != -1 ? 1 : 0;
     },
     platform: function(){
-        if(M.isMobile()){
-            if(M.isIOS()){
+        if(Mob.isMobile()){
+            if(Mob.isIOS()){
                 return "IOS";
-            } else if(M.isAndroid()){
+            } else if(Mob.isAndroid()){
                 return "Android";
             } else{
                 return "other-mobile";
@@ -64,7 +64,17 @@ let  M = {
         }
         document.cookie = cookieText;
     },
-    urlQuery : function(name){
+    /**
+     * 删除cookie
+     * @param {String} name cookie名称
+     * @param {String} [domain] cookie所在域
+     * @param {String} [path= '/'] 所在路径
+     * @example Mob.delCookie('cookie_name');//删除cookie
+     */
+    delCookie(name,domain,path){
+        document.cookie = name + "=; expires=Mon,26 Jul 1970 02:00:00 GMT;path="+ (path ? path:"/") + "; " + (domain ? ("domain=" + domain +";"): "");
+    },
+    urlQuery(name){
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
         if (r != null){
@@ -72,8 +82,36 @@ let  M = {
         }
         return "";
     },
+    /**
+     * 获取iOS和安卓系统版本号
+     */
+    version(){
+      var version = 0;
+        if(Mob.isIOS()){
+            version = navigator.userAgent.match(/ os ([\d_]+) /i)[1];
+            version && (version =  version.replace(/_/gi ,'.'));
+            version = version ?  version.replace(/_/gi ,'.') : 0;
+        }else{
+            version = navigator.userAgent.match(/android ([\d\.]+);/i)[1];
+            version && (version =  version.replace(/_/gi ,'.'));
+        }
+        return version;
+    },
+    ratio(){
+        if(arguments.callee.ratio){
+            return arguments.callee.ratio;
+        }
+        var ratio = window.devicePixelRatio >= 2 ? 2 : 1;
+        arguments.callee.ratio = ratio;
+        return ratio;
+    },
+    getHash(url){
+        url = url || window.location.href;
+        var match = url.match(/#(.*)$/);
+        return match ? match[1] : '';
+    },
     test(){
         return 'hello';
     }
 };
-module.exports = M;
+module.exports = Mob;
