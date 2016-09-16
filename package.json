@@ -1,0 +1,29 @@
+{
+  "name": "mobile-lib",
+  "version": "1.0.0",
+  "description": "A JavaScript Mobile Library",
+  "main": "base.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanminghui01/mobile-lib.git"
+  },
+  "keywords": [
+    "base"
+  ],
+  "author": "hanminghui01",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hanminghui01/mobile-lib/issues"
+  },
+  "homepage": "https://github.com/hanminghui01/mobile-lib#readme",
+  "devDependencies": {
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "webpack":"^1.12.9"
+  }
+}
